@@ -31,7 +31,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
+        viewSetup()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -40,12 +40,34 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func setupView(){
+    func viewSetup(){
         let backgroundColor = UIColor.init(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.8)
         topView.backgroundColor = backgroundColor
         bottomView.backgroundColor = backgroundColor
         scoreLabel.text = "0"
     }
     
+    func cameraSetup(){
+        let captureSession = AVCaptureSession()
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        let backCamera = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back)!
+        let input = try! AVCaptureDeviceInput(device: backCamera)
+        captureSession.addInput(input)
+        
+        cameraLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        view.layer.addSublayer(cameraLayer)
+        cameraLayer.frame = view.bounds
+        
+        view.bringSubview(toFront: topView)
+        view.bringSubview(toFront: bottomView)
+        
+        let videoOutput = AVCaptureVideoDataOutput()
+        videoOutput.setSampleBufferDelegate(self as? AVCaptureVideoDataOutputSampleBufferDelegate, queue: DispatchQueue(label: "buffer delegate"))
+        videoOutput.recommendedVideoSettings(forVideoCodecType: .jpeg, assetWriterOutputFileType: .mp4)
+        
+        captureSession.addOutput(videoOutput)
+        captureSession.sessionPreset = .high
+        captureSession.startRunning()
+    }
 }
 
