@@ -69,5 +69,48 @@ class ViewController: UIViewController {
         captureSession.sessionPreset = .high
         captureSession.startRunning()
     }
+    
+    func predict(image: CGImage) {
+        let model = try! VNCoreMLModel(for: Inceptionv3().model)
+        let request = VNCoreMLRequest(model: model, completionHandler: results)
+        let handler = VNSequenceRequestHandler()
+        try! handler.perform([request], on: image)
+    }
+    
+    func results(request: VNRequest, error: Error?) {
+        guard let results = request.results as? [VNClassificationObservation] else {
+            print("No result found")
+            return
+        }
+        
+        guard results.count != 0 else {
+            print("No result found")
+            return
+        }
+        
+        let highestConfidenceResult = results.first!
+        let identifier = highestConfidenceResult.identifier.contains(", ") ? String(describing: highestConfidenceResult.identifier.split(separator: ",").first!) : highestConfidenceResult.identifier
+        
+        if identifier == objectLabel.text! {
+            currentScore += 1
+            //nextObject()
+        }
+    }
+}
+
+
+extension ViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
+    func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else { fatalError("pixel buffer is nil") }
+        let ciImage = CIImage(cvPixelBuffer: pixelBuffer)
+        let context = CIContext(options: nil)
+        
+        guard let cgImage = context.createCGImage(ciImage, from: ciImage.extent) else { fatalError("cg image") }
+        let uiImage = UIImage(cgImage: cgImage, scale: 1.0, orientation: .leftMirrored)
+        
+        DispatchQueue.main.sync {
+            predict(image: uiImage.cgImage!)
+        }
+    }
 }
 

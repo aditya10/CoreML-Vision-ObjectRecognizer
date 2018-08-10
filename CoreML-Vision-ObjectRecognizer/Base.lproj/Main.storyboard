@@ -116,7 +116,7 @@
                     </view>
                     <connections>
                         <outlet property="bottomView" destination="uGl-bx-NWC" id="bHT-Jw-gTB"/>
-                        <outlet property="highscoreLael" destination="GLe-s2-MG4" id="kAA-xq-hli"/>
+                        <outlet property="highscoreLabel" destination="GLe-s2-MG4" id="XRO-Yx-aYT"/>
                         <outlet property="objectLabel" destination="4MD-LY-Yc3" id="0RC-2L-2qU"/>
                         <outlet property="scoreLabel" destination="2Ed-mF-Gz1" id="FvU-EQ-qs9"/>
                         <outlet property="skipButton" destination="VXP-EN-o6e" id="Anp-Jj-BWT"/>
