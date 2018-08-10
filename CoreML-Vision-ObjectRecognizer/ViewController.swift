@@ -32,6 +32,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewSetup()
+        cameraSetup()
+        getHighScore()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -93,9 +95,83 @@ class ViewController: UIViewController {
         
         if identifier == objectLabel.text! {
             currentScore += 1
-            //nextObject()
+            nextObject()
         }
     }
+    
+    func getHighScore() {
+        if let score = UserDefaults.standard.object(forKey: "highscore") {
+            highscoreLabel.text = "\(score)"
+            highScore = score as! Int
+        }
+        else {
+            print("No highscore, setting to 0.")
+            highscoreLabel.text = "0"
+            highScore = 0
+            setHighScore(score: 0)
+        }
+    }
+    
+    func setHighScore(score: Int) {
+        UserDefaults.standard.set(score, forKey: "highscore")
+    }
+    
+    //1
+    func endGame() {
+        //2
+        startButton.isHidden = false
+        skipButton.isHidden = true
+        objectLabel.text = "Game Over"
+        //3
+        if currentScore > highScore {
+            setHighScore(score: currentScore)
+            highscoreLabel.text = "\(currentScore)"
+        }
+        //4
+        currentScore = 0
+        timeRemaining = 60
+        
+    }
+    
+    //5
+    func nextObject() {
+        //6
+        let allObjects = Objects().objectArray
+        //7
+        let randomObjectIndex = Int(arc4random_uniform(UInt32(allObjects.count)))
+        //8
+        guard allObjects[randomObjectIndex] != objectLabel.text else {
+            nextObject()
+            return
+        }
+        //9
+        objectLabel.text = allObjects[randomObjectIndex]
+        scoreLabel.text = "\(currentScore)"
+    }
+    
+    @IBAction func startButtonTapped(_ sender: Any) {
+        //1
+        gameTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (gameTimer) in
+            //2
+            guard self.timeRemaining != 0 else {
+                gameTimer.invalidate()
+                self.endGame()
+                return
+            }
+            
+            self.timeRemaining -= 1
+            self.timeLabel.text = "\(self.timeRemaining)"
+        })
+        //3
+        startButton.isHidden = true
+        skipButton.isHidden = false
+        nextObject()
+    }
+    
+    @IBAction func skipButtonTapped(_ sender: Any) {
+        nextObject()
+    }
+    
 }
 
 

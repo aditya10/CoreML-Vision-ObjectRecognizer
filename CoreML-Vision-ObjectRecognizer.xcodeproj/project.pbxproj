@@ -15,6 +15,7 @@
 		B07C9A22210DADE80030892B /* CoreML_Vision_ObjectRecognizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07C9A21210DADE80030892B /* CoreML_Vision_ObjectRecognizerTests.swift */; };
 		B07C9A2D210DADE80030892B /* CoreML_Vision_ObjectRecognizerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07C9A2C210DADE80030892B /* CoreML_Vision_ObjectRecognizerUITests.swift */; };
 		B07C9A3C211D5E120030892B /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = B07C9A3A210F0DC00030892B /* Inceptionv3.mlmodel */; };
+		B07C9A3E211D630F0030892B /* Objects.swift in Sources */ = {isa = PBXBuildFile; fileRef = B07C9A3D211D630F0030892B /* Objects.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		B07C9A2C210DADE80030892B /* CoreML_Vision_ObjectRecognizerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreML_Vision_ObjectRecognizerUITests.swift; sourceTree = "<group>"; };
 		B07C9A2E210DADE80030892B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B07C9A3A210F0DC00030892B /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
+		B07C9A3D211D630F0030892B /* Objects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Objects.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +108,7 @@
 				B07C9A13210DADE80030892B /* Assets.xcassets */,
 				B07C9A15210DADE80030892B /* LaunchScreen.storyboard */,
 				B07C9A18210DADE80030892B /* Info.plist */,
+				B07C9A3D211D630F0030892B /* Objects.swift */,
 			);
 			path = "CoreML-Vision-ObjectRecognizer";
 			sourceTree = "<group>";
@@ -261,6 +264,7 @@
 			files = (
 				B07C9A0F210DADE60030892B /* ViewController.swift in Sources */,
 				B07C9A3C211D5E120030892B /* Inceptionv3.mlmodel in Sources */,
+				B07C9A3E211D630F0030892B /* Objects.swift in Sources */,
 				B07C9A0D210DADE60030892B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
